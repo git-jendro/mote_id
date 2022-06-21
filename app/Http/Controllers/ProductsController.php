@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Barcode;
+use App\Color;
 use App\Product;
+use App\ProductColor;
 use App\ProductImage;
+use App\ProductSize;
+use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,7 +33,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $color = Color::all();
+        $size = Size::all();
+        return view('products.create', compact('color', 'size'));
     }
 
     /**
@@ -53,6 +59,10 @@ class ProductsController extends Controller
             'path' => 'required',
             'path.*' => 'image|max:2000',
             'thumbnail' => 'required|numeric',
+            'color_id' => 'required|array',
+            'size_id' => 'required|array',
+            'color_id.*' => 'exists:colors,id',
+            'size_id.*' => 'exists:sizes,id',
         ], [
             'name.required' => 'Nama produk harus diisi !',
             'name.min:6' => 'Nama produk minimal 6 karakter !',
@@ -71,31 +81,57 @@ class ProductsController extends Controller
             'path.*.max' => 'Ukuran gambar maximal 2 MB !',
             'thumbnail.required' => 'Silahkan pilih thumbnail produk !',
             'thumbnail.numeric' => 'Silahkan pilih thumbnail produk !',
+            'color_id.required' => 'Pilih warna yang tersedia !',
+            'color_id.array' => 'Maaf inputan salah !',
+            'size_id.required' => 'Pilih ukuran yang tersedia !',
+            'size_id.array' => 'Maaf inputan salah !',
+            'color_id.*.exists' => 'Data yang dimasukan salah !',
+            'size_id.*.exists' => 'Data yang dimasukan salah !',
         ]);
 
-        $data = new Product;
-        $data->id = $this->generateUUID();
-        $data->name = $request->name;
-        $data->qty = $request->qty;
-        $data->price = $request->price;
-        $data->desc = $request->desc;
-        $path = 'Produk/' . $data->id;
+        try {
+            $data = new Product;
+            $data->id = $this->generateUUID();
+            $data->name = $request->name;
+            $data->qty = $request->qty;
+            $data->price = $request->price;
+            $data->desc = $request->desc;
+            $path = 'Produk/' . $data->id;
 
-        foreach ($request->file('path') as $key => $value) {
-            $img = new ProductImage;
-            $img->id = $this->generateUUID();
-            $img->path = $this->storage($path, $value);
-            $img->product_id = $data->id;
-            if ($key == $request->thumbnail) {
-                $img->thumbnail = 1;
-            } else {
-                $img->thumbnail = 0;
+            foreach ($request->file('path') as $key => $value) {
+                $img = new ProductImage;
+                $img->id = $this->generateUUID();
+                $img->path = $this->storage($path, $value);
+                $img->product_id = $data->id;
+                if ($key == $request->thumbnail) {
+                    $img->thumbnail = 1;
+                } else {
+                    $img->thumbnail = 0;
+                }
+                $img->save();
             }
-            $img->save();
-        }
-        $data->save();
 
-        return redirect()->route('produk.index')->with('success', 'Data produk ' . $data->name . ' berhasil ditambahkan');
+            foreach ($request->color_id as $value) {
+                $color = new ProductColor;
+                $color->id = $this->generateUUID();
+                $color->product_id = $data->id;
+                $color->color_id = $value;
+                $color->save();
+            }
+
+            foreach ($request->size_id as $value) {
+                $size = new ProductSize;
+                $size->id = $this->generateUUID();
+                $size->product_id = $data->id;
+                $size->size_id = $value;
+                $size->save();
+            }
+            $data->save();
+
+            return redirect()->route('produk.index')->with('suceess', 'Data produk ' . $data->name . ' berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            return redirect()->route('produk.index')->with('danger', 'Maaf, terjadi kesalahan !');
+        }
     }
 
     /**
@@ -106,9 +142,13 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        $data = Product::find($id);
+        try {
+            $data = Product::find($id);
 
-        return view('products.show', compact('data'));
+            return view('products.show', compact('data'));
+        } catch (\Throwable $th) {
+            return redirect()->route('produk.index')->with('danger', 'Data tidak ditemukan !');
+        }
     }
 
     /**
@@ -119,9 +159,15 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $data = Product::find($id);
+        try {
+            $data = Product::find($id);
+            $color = Color::all();
+            $size = Size::all();
 
-        return view('products.edit', compact('data'));
+            return view('products.edit', compact('data', 'color', 'size'));
+        } catch (\Throwable $th) {
+            return redirect()->route('produk.index')->with('danger', 'Data tidak ditemukan !');
+        }
     }
 
     /**
@@ -143,6 +189,10 @@ class ProductsController extends Controller
             'price' => 'required|numeric',
             'l_price' => 'min:5|max:11',
             'desc' => 'required|max:1000',
+            'color_id' => 'required|array',
+            'size_id' => 'required|array',
+            'color_id.*' => 'exists:colors,id',
+            'size_id.*' => 'exists:sizes,id',
         ], [
             'name.required' => 'Nama produk harus diisi !',
             'name.min:6' => 'Nama produk minimal 6 karakter !',
@@ -156,54 +206,82 @@ class ProductsController extends Controller
             'l_price.max' => 'Harga produk terlalu berlebihan !',
             'desc.required' => 'Deskripsi produk harus diisi !',
             'desc.max:1000' => 'Deskripsi produk terlalu panjang !',
+            'color_id.required' => 'Pilih warna yang tersedia !',
+            'color_id.array' => 'Maaf inputan salah !',
+            'size_id.required' => 'Pilih ukuran yang tersedia !',
+            'size_id.array' => 'Maaf inputan salah !',
+            'color_id.*.exists' => 'Data yang dimasukan salah !',
+            'size_id.*.exists' => 'Data yang dimasukan salah !',
         ]);
-        $data = Product::find($id);
+        try {
+            $data = Product::find($id);
 
-        if ($data->image->count() < 1) {
-            $request->validate([
-                'path' => 'required',
-                'path.*' => 'image|max:2000',
-            ], [
-                'path.required' => 'Harus melampirkan gambar produk !',
-                'path.*.image' => 'Format yang diizinkan hanya jpg, jpeg, png, bmp, gif, svg, or webp !',
-                'path.*.max' => 'Ukuran gambar maximal 2 MB !',
-            ]);
-        }
-
-        $conn = $data->image->where('thumbnail', 1)->count();
-        if ($conn < 1) {
-            $request->validate([
-                'thumbnail' => 'required|numeric',
-            ], [
-                'thumbnail.required' => 'Silahkan pilih thumbnail produk !',
-                'thumbnail.numeric' => 'Silahkan pilih thumbnail produk !',
-            ]);
-        }
-
-        $data->name = $request->name;
-        $data->qty = $request->qty;
-        $data->price = $request->price;
-        $data->desc = $request->desc;
-        $path = 'Produk/' . $data->id;
-        if ($request->has('path')) {
-            foreach ($request->file('path') as $key => $value) {
-                $img = new ProductImage;
-                $img->id = $this->generateUUID();
-                $img->path = $this->storage($path, $value);
-                $img->product_id = $data->id;
-                $img->thumbnail = 0;
-                if ($key == $request->thumbnail) {
-                    ProductImage::where('product_id', $data->id)->update(
-                        ['thumbnail' => 0]
-                    );
-                    $img->thumbnail = 1;
-                }
-                $img->save();
+            if ($data->image->count() < 1) {
+                $request->validate([
+                    'path' => 'required',
+                    'path.*' => 'image|max:2000',
+                ], [
+                    'path.required' => 'Harus melampirkan gambar produk !',
+                    'path.*.image' => 'Format yang diizinkan hanya jpg, jpeg, png, bmp, gif, svg, or webp !',
+                    'path.*.max' => 'Ukuran gambar maximal 2 MB !',
+                ]);
             }
-        }
-        $data->save();
 
-        return redirect()->route('produk.index')->with('success', 'Data produk ' . $data->name . ' berhasil ditambahkan');
+            $conn = $data->image->where('thumbnail', 1)->count();
+            if ($conn < 1) {
+                $request->validate([
+                    'thumbnail' => 'required|numeric',
+                ], [
+                    'thumbnail.required' => 'Silahkan pilih thumbnail produk !',
+                    'thumbnail.numeric' => 'Silahkan pilih thumbnail produk !',
+                ]);
+            }
+
+            $data->name = $request->name;
+            $data->qty = $request->qty;
+            $data->price = $request->price;
+            $data->desc = $request->desc;
+            $path = 'Produk/' . $data->id;
+            if ($request->has('path')) {
+                foreach ($request->file('path') as $key => $value) {
+                    $img = new ProductImage;
+                    $img->id = $this->generateUUID();
+                    $img->path = $this->storage($path, $value);
+                    $img->product_id = $data->id;
+                    $img->thumbnail = 0;
+                    if ($key == $request->thumbnail) {
+                        ProductImage::where('product_id', $data->id)->update(
+                            ['thumbnail' => 0]
+                        );
+                        $img->thumbnail = 1;
+                    }
+                    $img->save();
+                }
+            }
+
+            ProductColor::where('product_id', $data->id)->delete();
+            foreach ($request->color_id as $value) {
+                $color = new ProductColor;
+                $color->id = $this->generateUUID();
+                $color->product_id = $data->id;
+                $color->color_id = $value;
+                $color->save();
+            }
+
+            ProductSize::where('product_id', $data->id)->delete();
+            foreach ($request->size_id as $value) {
+                $size = new ProductSize;
+                $size->id = $this->generateUUID();
+                $size->product_id = $data->id;
+                $size->size_id = $value;
+                $size->save();
+            }
+            $data->save();
+
+            return redirect()->route('produk.index')->with('update', 'Data produk ' . $data->name . ' berhasil diubah');
+        } catch (\Throwable $th) {
+            return redirect()->route('produk.index')->with('danger', 'Maaf, terjadi kesalahan !');
+        }
     }
 
     /**
@@ -214,12 +292,18 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $data = Product::find($id);
-        ProductImage::where('product_id', $id)->delete();
-        Barcode::where('product_id', $id)->delete();
-        Product::destroy($id);
+        try {
+            $data = Product::find($id);
+            ProductImage::where('product_id', $id)->delete();
+            Storage::delete($data->path);
+            Barcode::where('product_id', $id)->delete();
+            Product::destroy($id);
 
-        return redirect()->route('produk.index')->with('danger', 'Data produk ' . $data->name . ' telah dihapus !');
+            return redirect()->route('produk.index')->with('danger', 'Data produk ' . $data->name . ' telah dihapus !');
+        } catch (\Throwable $th) {
+
+            return redirect()->route('produk.index')->with('danger', 'Data tidak ditemukan !');
+        }
     }
 
     public function delete_image(Request $request)
@@ -227,15 +311,14 @@ class ProductsController extends Controller
         $data = ProductImage::find($request->id);
 
         if ($data) {
-            // $this->delete_image($request->name);
             $all = ProductImage::where('product_id', $data->product_id)->count();
             if ($all > 1) {
-                if(Storage::exists($data->path)){
+                if (Storage::exists($data->path)) {
                     ProductImage::destroy($request->id);
                     Storage::delete($data->path);
-                  }else{
+                } else {
                     dd('File not found.');
-                  }
+                }
                 return response()->json(200);
             } else {
                 return response()->json(500);

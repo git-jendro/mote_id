@@ -27,4 +27,8 @@ Route::prefix('/dashboard')->middleware('auth')->group(function (){
     Route::resource('produk', 'ProductsController');
 
     Route::resource('barcode', 'BarcodesController');
+
+    Route::resource('warna', 'ColorsController');
+
+    Route::resource('ukuran', 'SizesController');
 });

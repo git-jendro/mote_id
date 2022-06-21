@@ -17,4 +17,14 @@ class Product extends Model
     {
         return $this->hasMany(Barcode::class);
     }
+
+    public function size()
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+
+    public function color()
+    {
+        return $this->hasMany(ProductColor::class);
+    }
 }

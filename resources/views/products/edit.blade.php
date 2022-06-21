@@ -67,6 +67,40 @@
                         @enderror
                     </div>
                 </div>
+                <div class="form-group row mb-0">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="form-check-label mb-2">Pilih Warna</label>
+                        <div class="row pl-4 mb-lg-3">
+                            @foreach ($color as $item)
+                            <div class="col-3">
+                                <input class="form-check-input @error('color_id') is-invalid @enderror" type="checkbox" value="{{$item->id}}" name="color_id[]" @foreach ($data->color as $col) {{$col->color_id == $item->id ? 'checked' : ''}} @endforeach>
+                                <label class="form-check-label">{{$item->name}}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                        @error('color_id')
+                            <div class="my-2 error invalid-feedback d-block w-100">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-check-label mb-2">Pilih Ukuran</label>
+                        <div class="row pl-4 mb-lg-3">
+                            @foreach ($size as $item)
+                            <div class="col-3">
+                                <input class="form-check-input @error('size_id') is-invalid @enderror" type="checkbox" value="{{$item->id}}" name="size_id[]" @foreach ($data->size as $col) {{$col->size_id == $item->id ? 'checked' : ''}} @endforeach>
+                                <label class="form-check-label">{{$item->initial}} ({{$item->name}})</label>
+                            </div>
+                            @endforeach
+                        </div>
+                        @error('size_id')
+                            <div class="my-2 error invalid-feedback d-block w-100">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="input-group">
                         <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" placeholder="Deskripsi Produk"
@@ -185,14 +219,4 @@
             $('#answer').val(images.index(img));
         });
     </script>
-
-    <!-- Custom styles for this page -->
-    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('sb-admin2/js/demo/datatables-demo.js') }}"></script>
 @endsection

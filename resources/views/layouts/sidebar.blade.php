@@ -24,6 +24,24 @@
     <hr class="sidebar-divider">
 
     <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item" id="master">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster"
+            aria-expanded="true" aria-controls="collapseMaster">
+            <i class="fas fa-fw fa-server"></i>
+            <span>Master</span>
+        </a>
+        <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
+                <a class="collapse-item" id="list-color" href="{{route('warna.index')}}">List Warna</a>
+                <a class="collapse-item" id="list-size" href="{{route('ukuran.index')}}">List Ukuran</a>
+            </div>
+        </div>
+    </li>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
     <li class="nav-item" id="product">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
             aria-expanded="true" aria-controls="collapseProduct">

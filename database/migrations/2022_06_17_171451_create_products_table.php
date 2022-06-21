@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->integer('qty');
             $table->bigInteger('price');
             $table->text('desc');
+            $table->string('qr');
             $table->timestamps();
         });
     }

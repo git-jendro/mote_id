@@ -14,7 +14,9 @@ class CreateProductSizesTable extends Migration
     public function up()
     {
         Schema::create('product_sizes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('product_id');
+            $table->uuid('size_id');
             $table->timestamps();
         });
     }

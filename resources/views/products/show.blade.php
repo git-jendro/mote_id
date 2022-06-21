@@ -29,7 +29,7 @@
                         <div class="row">
                             @foreach ($data->image as $item)
                         <div class="col-4">
-                            <div class="product-image-thumb"><img src="{{ asset('storage/'.$item->path) }}"
+                            <div class="product-image-thumb w-100"><img src="{{ asset('storage/'.$item->path) }}"
                                 alt="{{$data->name}}"></div>
                         </div>
                         @endforeach
@@ -44,55 +44,25 @@
       
                     <hr>
                     <h4>Warna yang tersedia</h4>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn btn-default text-center active">
-                        <input type="radio" name="color_option" id="color_option_a1" autocomplete="off" checked>
-                        Green
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a2" autocomplete="off">
-                        Blue
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a3" autocomplete="off">
-                        Purple
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a4" autocomplete="off">
-                        Red
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a5" autocomplete="off">
-                        Orange
-                      </label>
+                    <div class="row">
+                      @foreach ($data->color as $item)
+                      <div class="col-3">
+                        <label class="active">
+                          {{$item->color->name}}
+                        </label>
+                      </div>
+                      @endforeach
                     </div>
       
                     <h4 class="mt-3">Ukuran</h4>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                        <span class="text-xl">S</span>
+                    <div>
+                      @foreach ($data->size as $item)
+                      <label class="btn btn-default">
+                        <span class="text-xl">{{$item->size->initial}}</span>
                         <br>
-                        Small
+                        {{$item->size->name}}
                       </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b2" autocomplete="off">
-                        <span class="text-xl">M</span>
-                        <br>
-                        Medium
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b3" autocomplete="off">
-                        <span class="text-xl">L</span>
-                        <br>
-                        Large
-                      </label>
-                      <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b4" autocomplete="off">
-                        <span class="text-xl">XL</span>
-                        <br>
-                        Xtra-Large
-                      </label>
+                      @endforeach
                     </div>
       
                     <div class="bg-gray py-2 px-3 mt-4">

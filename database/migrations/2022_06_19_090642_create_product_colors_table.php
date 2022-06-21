@@ -14,7 +14,9 @@ class CreateProductColorsTable extends Migration
     public function up()
     {
         Schema::create('product_colors', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('product_id');
+            $table->uuid('color_id');
             $table->timestamps();
         });
     }
