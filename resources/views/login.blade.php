@@ -62,6 +62,7 @@
                                         <img class="img-fluid mb-5 rounded"
                                             src="{{ asset('img/logos/logo_250x250.png') }}" alt="">
                                     </div>
+                                    @include('layouts.message')
                                     <form class="user" action="{{ route('store.login') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">

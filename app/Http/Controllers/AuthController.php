@@ -19,7 +19,7 @@ class AuthController extends Controller
         if (auth()->attempt(array('username' => $request->username, 'password' => $request->password))) {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login')->with('danger', 'Username atau Password salah !');
         }
     }
     

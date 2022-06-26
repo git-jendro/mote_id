@@ -1,0 +1,165 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.banner {
+    /* padding-top: 5rem; */
+    background-color: rgb(17, 16, 16);
+    background-image: url("../img/bg/bg-1.jpg");
+    /* Full height */
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+
+    /* display: flex; */
+    align-items: center;
+}
+
+.card-banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: rgb(27, 24, 24, 0.5);
+    background-clip: border-box;
+    border-radius: 2rem;
+}
+
+.logo {
+    max-width: 180px !important;
+    transition: 1.1s;
+}
+
+.card-text {
+    color: white;
+    transition: 1.2s;
+    /* font-size: 24px; */
+}
+
+@media (min-width: 852px) {
+    .card-img-overlay {
+        opacity: 0;
+        transition: 1.5s ease;
+    }
+}
+
+.card-img-overlay:hover {
+    opacity: 1.8;
+    transition: 1.5s ease;
+}
+
+.logo:hover {
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 1.1s;
+}
+
+#qr-reader__camera_permission_button {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+#qr-reader__dashboard_section_csr button {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+#qr-reader__camera_permission_button:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+#qr-reader__camera_permission_button:focus {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+
+#qr-reader__camera_permission_button,
+#qr-reader__camera_permission_button:active,
+#qr-reader__camera_permission_button.active,
+.show>#qr-reader__camera_permission_button.dropdown-toggle {
+    color: #fff;
+    background-color: #0a58ca;
+    border-color: #0a53be;
+}
+
+#qr-reader__camera_permission_button:focus,
+#qr-reader__camera_permission_button:active:focus,
+#qr-reader__camera_permission_button.active:focus,
+.show>#qr-reader__camera_permission_button.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+
+#qr-reader__camera_permission_button:disabled,
+#qr-reader__camera_permission_button.disabled {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.navbar {
+    border-radius: 0px 0px 60px 60px;
+}
+
+.footer {
+    border-radius: 60px 60px 0px 0px;
+}
+
+.nav-tabs .nav-link{
+    border-radius: 0px !important;
+}
+
+.card {
+    border-radius: 0px !important;
+}
+.card-header {
+    background-color: #212529 !important;
+    color: #fff;
+}

@@ -20,13 +20,16 @@ Route::get('/login', function () {
 Route::post('/login', 'AuthController@store')->name('store.login');
 Route::post('logout', 'AuthController@logout')->name('logout');
 
+Route::get('/', 'PagesController@index')->name('index');
+Route::get('/produk/{slug}', 'PagesController@show_product')->name('show.product');
+
 Route::prefix('/dashboard')->middleware('auth')->group(function (){
 
     Route::get('/', 'PagesController@dashboard')->name('dashboard');
 
-    Route::resource('produk', 'ProductsController');
+    Route::resource('pembeli', 'BuyersController');
 
-    Route::resource('barcode', 'BarcodesController');
+    Route::resource('produk', 'ProductsController');
 
     Route::resource('warna', 'ColorsController');
 

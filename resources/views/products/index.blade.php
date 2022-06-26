@@ -51,9 +51,12 @@
                                         <a href="{{route('produk.edit', [$item->id])}}" class="btn btn-cyan btn-sm btn-icon"><i class="fas fa-pen"></i></a>
                                         <button class="btn btn-red btn-sm btn-icon" data-toggle="modal"
                                         data-target="#delete-modal-{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                                        <button class="btn btn-secondary btn-sm btn-icon" data-toggle="modal"
+                                        data-target="#qr-modal-{{ $item->id }}"><i class="fas fa-qrcode"></i></button>
                                     </div>
                                 </td>
                                 @include('products.delete')
+                                @include('products.qr')
                             </tr>
                         @endforeach
                     </tbody>

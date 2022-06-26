@@ -57,17 +57,17 @@
         </div>
     </li>
     
-    <li class="nav-item" id="barcode">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarcode"
-            aria-expanded="true" aria-controls="collapseBarcode">
-            <i class="fas fa-fw fa-qrcode"></i>
-            <span>Barcode</span>
+    <li class="nav-item" id="buyer">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBuyer"
+            aria-expanded="true" aria-controls="collapseBuyer">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Pembeli</span>
         </a>
-        <div id="collapseBarcode" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseBuyer" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
-                <a class="collapse-item" id="list-barcode" href="buttons.html">List Barcode</a>
-                <a class="collapse-item" id="generate-barcode" href="cards.html">Generate Barcode</a>
+                <a class="collapse-item" id="list-buyer" href="{{route('pembeli.index')}}">List Pembeli</a>
+                <a class="collapse-item" id="add-buyer" href="{{route('pembeli.create')}}">Tambah Pembeli</a>
             </div>
         </div>
     </li>

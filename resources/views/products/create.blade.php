@@ -156,6 +156,9 @@
     .selected {
         border: 5px solid rgb(0, 159, 252);
     }
+    #sub {
+        margin-bottom: 0.2rem;
+    }
 </style>
 @section('js')
     <!-- Custom styles for this page -->

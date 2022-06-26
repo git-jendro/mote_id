@@ -13,9 +13,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function barcode()
+    public function buyer()
     {
-        return $this->hasMany(Barcode::class);
+        return $this->hasMany(Buyer::class);
     }
 
     public function size()
