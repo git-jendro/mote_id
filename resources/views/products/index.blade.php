@@ -20,18 +20,20 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
-                            <th>Stock</th>
-                            <th>Harga</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Warna</th>
+                            <th>Ukuran</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
-                            <th>Stock</th>
-                            <th>Harga</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Warna</th>
+                            <th>Ukuran</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </tfoot>
@@ -42,9 +44,10 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{ $i++ }}</td>
+                                <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->qty }}</td>
-                                <td>Rp. {{ number_format($item->price,0) }}</td>
+                                <td>{{ $item->color->name }}</td>
+                                <td>{{ $item->size->name }}</td>
                                 <td>
                                     <div class="d-flex justify-content-around">
                                         <a href="{{route('produk.show', [$item->id])}}" class="btn btn-blue btn-sm btn-icon"  data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"><i class="fas fa-eye"></i></a>

@@ -10,13 +10,13 @@
             </div>
             <div class="modal-body text-center">
                 <img class="barcode pull-right"
-                    src="data:image/png;base64,{{ DNS2D::getBarcodePNG(route('produk.show', [$item->id]), 'QRCODE', 4, 4) }}"
+                    src="data:image/png;base64,{{ DNS2D::getBarcodePNG(route('legal.product', [$item->slug]), 'QRCODE', 4, 4) }}"
                     alt="barcode" />
             </div>
             <div class="modal-footer">
-                <button type="button" id="download-{{$item->id}}" class="btn btn-primary" style="width: auto;">
+                <a href="{{route('produk.qr-download', [$item->id])}}"class="btn btn-primary" style="width: auto;">
                     Download
-                </button>
+                </a>
                 <button type="button" class="btn btn-light" type="button" data-dismiss="modal">
                     Close
                 </button>

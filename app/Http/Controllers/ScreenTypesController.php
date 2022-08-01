@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Color;
 use App\Product;
-use App\ProductColor;
+use App\ScreenType;
 use Illuminate\Http\Request;
 
-class ColorsController extends Controller
+class ScreenTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +15,10 @@ class ColorsController extends Controller
      */
     public function index()
     {
-        $data = Color::all();
-
-        return view('colors.index', compact('data'));
+        $data = ScreenType::all();
+        return view('screen-types.index', compact('data'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +26,7 @@ class ColorsController extends Controller
      */
     public function create()
     {
-        return view('colors.create');
+        return view('screen-types.create');
     }
 
     /**
@@ -40,22 +38,22 @@ class ColorsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|regex:/^[a-zA-Z ]*$/|max:12',
-        ], [
-            'name.required' => 'Nama warna harus diisi !',
-            'name.regex' => 'Nama warna harus berupa huruf !',
-            'name.max' => 'Nama warna maximal 12 karakter !',
+            'name' => 'required|min:3|max:50'
+        ],[
+            'name.required' => 'Jenis sablon harus diisi !',
+            'name.min:3' => 'Jenis sablon minimal 3 karakter !',
+            'name.max:50' => 'Jenis sablon maximal 50 karakter !',
         ]);
-
+        
         try {
-            $data = new Color;
+            $data = new ScreenType;
             $data->id = $this->generateUUID();
             $data->name = $request->name;
             $data->save();
-
-            return redirect()->route('warna.index')->with('success', 'Data warna ' . $data->name . ' berhasil ditambahkan !');
+    
+            return redirect()->route('jenis-sablon.index')->with('success', 'Data jenis sablon '.$data->name.' berhasil ditambahkan !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('jenis-sablon.index')->with('danger', 'Maaf terjadi kesalahan !');
         }
     }
 
@@ -67,9 +65,9 @@ class ColorsController extends Controller
      */
     public function show($id)
     {
-        return redirect()->route('warna.index');
+        return redirect()->route('jenis-sablon.index');
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -78,7 +76,7 @@ class ColorsController extends Controller
      */
     public function edit($id)
     {
-        return redirect()->route('warna.index');
+        return redirect()->route('jenis-sablon.index');
     }
 
     /**
@@ -91,24 +89,23 @@ class ColorsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name-'.$id => 'required|regex:/^[a-zA-Z ]*$/|max:12',
-        ], [
-            'name-'.$id.'.required' => 'Nama warna harus diisi !',
-            'name-'.$id.'.regex' => 'Nama warna harus berupa huruf !',
-            'name-'.$id.'.max' => 'Nama warna maximal 12 karakter !',
+            'name-'.$id => 'required|min:3|max:50'
+        ],[
+            'name-'.$id.'.required' => 'Jenis sablon harus diisi !',
+            'name-'.$id.'.min:3' => 'Jenis sablon minimal 3 karakter !',
+            'name-'.$id.'.max:50' => 'Jenis sablon maximal 50 karakter !',
         ]);
-
+        
         try {
-            $data = Color::find($id);
+            $data = ScreenType::findOrFail($id);
             $data->name = $request['name-'.$id];
             $data->save();
-
-            return redirect()->route('warna.index')->with('update', 'Data warna ' . $data->name . ' berhasil diubah !');
+            return redirect()->route('jenis-sablon.index')->with('update', 'Data jenis sablon '.$data->name.' berhasil diubah !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('jenis-sablon.index')->with('danger', 'Maaf terjadi kesalahan !');
         }
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -118,16 +115,16 @@ class ColorsController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Color::findOrFail($id);
-            Product::where('color_id', $id)
+            $data = ScreenType::findOrFail($id);
+            Product::where('screen_type_id', $id)
             ->update([
-                'color_id' => null,
+                'screen_type_id' => null,
             ]);
-            Color::destroy($id);
-            
-            return redirect()->route('warna.index')->with('danger', 'Data warna '.$data->name.' telah dihapus !');
+            ScreenType::destroy($id);
+
+            return redirect()->route('jenis-sablon.index')->with('danger', 'Data jenis sablon '.$data->name.' berhasil dihapus !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('jenis-sablon.index')->with('danger', 'Maaf terjadi kesalahan   !');
         }
     }
 }

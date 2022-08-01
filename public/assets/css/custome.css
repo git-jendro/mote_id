@@ -163,3 +163,24 @@ html {
     background-color: #212529 !important;
     color: #fff;
 }
+
+@media (max-width:500px) {
+    .img-navbar {
+        max-height: 25px;
+        max-width: 25px;
+    }
+    .img-footer {
+        max-height: 30px;
+        max-width: 25px;
+    }
+    .card-l {
+        position: absolute !important;
+        width: 60%;
+        height: 300px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transition: transform .4s ease;
+        cursor: pointer;
+    }
+}

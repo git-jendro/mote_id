@@ -44,8 +44,9 @@
                     <div class="col-sm-6">
                         <div class="input-group input-group-joined">
                             <span class="input-group-text text-muted">+62</span>
-                            <input class="form-control h-100 @error('phone_num') is-invalid @enderror @error('l_phone_num') is-invalid @enderror" type="text"
-                                name="phone_num" value="{{ old('phone_num') }}" placeholder="Nomor Telepon"
+                            <input
+                                class="form-control h-100 @error('phone_num') is-invalid @enderror @error('l_phone_num') is-invalid @enderror"
+                                type="text" name="phone_num" value="{{ old('phone_num') }}" placeholder="Nomor Telepon"
                                 maxlength="13">
                         </div>
                         @error('l_phone_num')
@@ -71,6 +72,22 @@
                         </div>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <div class="row prev-img mb-2">
+
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input h-100 @error('ava') is-invalid @enderror" id="file"
+                            name="ava">
+                        <label class="custom-file-label text-muted">Choose file</label>
+                    </div>
+                    <input type="hidden" name="thumbnail" id="answer" />
+                    @error('ava')
+                        <div class="mt-2 error invalid-feedback d-block w-100">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
                 <button type="submit" class="btn btn-primary btn-user btn-block">
                     Submit
                 </button>
@@ -79,6 +96,16 @@
     </div>
 @endsection
 <style>
+    .prev-img {
+        display: flex;
+    }
+
+    .prev-img img {
+        width: 250px;
+        height: 200px;
+        object-fit: cover;
+    }
+
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         color: #69707a !important;
     }
@@ -120,5 +147,19 @@
         $('input[name=phone_num]').keyup(function() {
             $(this).val($(this).val().replace(/\D/, ''));
         });
+        
+        var inputLocalFont = document.getElementById("file");
+        inputLocalFont.addEventListener("change", previewImages, false);
+
+        function previewImages() {
+            $('.prev-img').html('');
+            var fileList = this.files;
+            var anyWindow = window.URL || window.webkitURL;
+            for (var i = 0; i <= fileList.length; i++) {
+                var objectUrl = anyWindow.createObjectURL(fileList[i]);
+                $('.prev-img').append('<img src="' + objectUrl + '" class="my-1" />');
+                window.URL.revokeObjectURL(fileList[i]);
+            }
+        }
     </script>
 @endsection

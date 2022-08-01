@@ -2,7 +2,7 @@
     <div class="container d-flex justify-content-center">
         <span class="text-muted my-2">
             <a class="navbar-brand" href="{{route('index')}}">
-                <img src="{{asset('img/logos/home.png')}}" alt="" width="60" height="70">
+                <img class="img-footer" src="{{asset('img/logos/home.png')}}" alt="" width="50" height="60">
             </a>
         </span>
     </div>

@@ -21,17 +21,34 @@ Route::post('/login', 'AuthController@store')->name('store.login');
 Route::post('logout', 'AuthController@logout')->name('logout');
 
 Route::get('/', 'PagesController@index')->name('index');
-Route::get('/produk/{slug}', 'PagesController@show_product')->name('show.product');
+Route::get('/produk/{slug}', 'PagesController@legal')->name('legal.product');
+Route::get('/produk/{slug}/detail/{param}', 'PagesController@show_product')->name('detail.product');
+Route::get('/legal', function ()
+{
+    return view('legal');
+});
+Route::get('/catalogue', function ()
+{
+    return view('coming-soon');
+})->name('catalogue');
+
+Route::post('/produk', 'PagesController@owner_check')->name('owner.check');
 
 Route::prefix('/dashboard')->middleware('auth')->group(function (){
-
+    
     Route::get('/', 'PagesController@dashboard')->name('dashboard');
-
+    
     Route::resource('pembeli', 'BuyersController');
-
+    
     Route::resource('produk', 'ProductsController');
-
+    
     Route::resource('warna', 'ColorsController');
-
+    
     Route::resource('ukuran', 'SizesController');
+    
+    Route::resource('jenis-sablon', 'ScreenTypesController');
+    
+    Route::resource('material', 'MaterialsController');
+
+    Route::get('/download/produk/{id}', 'ProductsController@download_qr')->name('produk.qr-download');
 });

@@ -9,27 +9,54 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="user" action="{{ route('ukuran.store') }}" method="post" enctype="multipart/form-data">
+                <form class="user" action="{{ route('ukuran.store') }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control h-100 @error('name') is-invalid @enderror" type="text"
+                                name="name" value="{{ old('name') }}" placeholder="Nama Ukuran">
+                        </div>
+                        @error('name')
+                            <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <div class="input-group">
-                                <input class="form-control h-100 @error('name') is-invalid @enderror" type="text"
-                                    name="name" value="{{ old('name') }}" placeholder="Nama Ukuran">
+                            <div class="input-group input-group-joined">
+                                <input
+                                    class="form-control h-100 @error('width') is-invalid @enderror @error('l_width') is-invalid @enderror"
+                                    type="text" name="width" value="{{ old('width') }}"
+                                    placeholder="Lebar Ukuran" maxlength="4">
+                                <span class="input-group-text text-muted">cm</span>
                             </div>
-                            @error('name')
+                            @error('width')
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            @error('l_width')
                                 <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <input class="form-control h-100 @error('initial') is-invalid @enderror" type="text"
-                                    name="initial" value="{{ old('initial') }}" placeholder="Inisial Ukuran">
+                            <div class="input-group input-group-joined">
+                                <input
+                                    class="form-control h-100 @error('height') is-invalid @enderror @error('l_height') is-invalid @enderror"
+                                    type="text" name="height" value="{{ old('height') }}"
+                                    placeholder="Tinggi Ukuran" maxlength="4">
+                                <span class="input-group-text text-muted">cm</span>
+                            </div>
+                            @error('height')
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                    {{ $message }}
                                 </div>
-                                <sub>*Contoh : S, M, L, XL</sub>
-                            @error('initial')
+                            @enderror
+                            @error('l_height')
                                 <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
                                     {{ $message }}
                                 </div>

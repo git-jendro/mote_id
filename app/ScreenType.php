@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Size extends Model
+class ScreenType extends Model
 {
     public $incrementing = false;
 

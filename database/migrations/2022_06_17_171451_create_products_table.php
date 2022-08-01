@@ -16,12 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 150);
-            $table->integer('qty');
-            $table->bigInteger('price');
-            $table->text('desc');
+            $table->text('design_meaning');
             $table->string('slug');
-            $table->string('material');
-            $table->string('screen_type');
+            $table->uuid('material_id');
+            $table->uuid('screen_type_id');
+            $table->uuid('size_id');
+            $table->uuid('color_id');
             $table->timestamps();
         });
     }

@@ -2,14 +2,14 @@
 @section('page.heading')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <div>
-            <h1 class="h3 mb-0 text-gray-800">Ukuran</h1>
-            <p class="m-0">List Ukuran</p>
+            <h1 class="h3 mb-0 text-gray-800">Jenis Sablon</h1>
+            <p class="m-0">List Jenis Sablon</p>
         </div>
-        <button class="btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
             data-target="#create-modal">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i> Tambah Ukuran
+            <i class="fas fa-plus-circle fa-sm text-white-50"></i> Tambah Jenis Sablon
         </button>
-        @include('sizes.create')
+        @include('screen-types.create')
     </div>
 @endsection
 
@@ -24,8 +24,6 @@
                         <tr>
                             <th>No.</th>
                             <th>Name</th>
-                            <th>Lebar</th>
-                            <th>Tinggi</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -33,8 +31,6 @@
                         <tr>
                             <th>No.</th>
                             <th>Name</th>
-                            <th>Lebar</th>
-                            <th>Tinggi</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </tfoot>
@@ -46,19 +42,16 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->width }} cm</td>
-                                <td>{{ $item->height }} cm</td>
                                 <td>
                                     <div class="d-flex justify-content-around">
                                         <button class="btn btn-cyan btn-sm btn-icon" data-toggle="modal"
-                                            data-target="#edit-modal-{{ $item->id }}"><i
-                                                class="fas fa-pen"></i></button>
+                                            data-target="#edit-modal-{{ $item->id }}"><i class="fas fa-pen"></i></button>
                                         <button class="btn btn-red btn-sm btn-icon" data-toggle="modal"
                                             data-target="#delete-modal-{{ $item->id }}"><i
                                                 class="fas fa-trash"></i></button>
-                                        @include('sizes.edit')
-                                        @include('sizes.delete')
                                     </div>
+                                    @include('screen-types.edit')
+                                    @include('screen-types.delete')
                                 </td>
                             </tr>
                         @endforeach
@@ -74,7 +67,7 @@
     <script>
         $(document).ready(function() {
             $('#master').addClass('active');
-            $('#list-size').addClass('active');
+            $('#list-screen-type').addClass('active');
             $('#collapseMaster').toggle();
         });
         $(document).ready(function() {

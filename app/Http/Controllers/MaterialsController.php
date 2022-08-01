@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Color;
+use App\Material;
 use App\Product;
-use App\ProductColor;
 use Illuminate\Http\Request;
 
-class ColorsController extends Controller
+class MaterialsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +15,10 @@ class ColorsController extends Controller
      */
     public function index()
     {
-        $data = Color::all();
-
-        return view('colors.index', compact('data'));
+        $data = Material::all();
+        return view('materials.index', compact('data'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +26,7 @@ class ColorsController extends Controller
      */
     public function create()
     {
-        return view('colors.create');
+        return view('materials.create');
     }
 
     /**
@@ -40,22 +38,22 @@ class ColorsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|regex:/^[a-zA-Z ]*$/|max:12',
-        ], [
-            'name.required' => 'Nama warna harus diisi !',
-            'name.regex' => 'Nama warna harus berupa huruf !',
-            'name.max' => 'Nama warna maximal 12 karakter !',
+            'name' => 'required|min:3|max:50'
+        ],[
+            'name.required' => 'Nama material harus diisi !',
+            'name.min:3' => 'Nama material minimal 3 karakter !',
+            'name.max:50' => 'Nama material maximal 50 karakter !',
         ]);
-
+        
         try {
-            $data = new Color;
+            $data = new Material;
             $data->id = $this->generateUUID();
             $data->name = $request->name;
             $data->save();
-
-            return redirect()->route('warna.index')->with('success', 'Data warna ' . $data->name . ' berhasil ditambahkan !');
+    
+            return redirect()->route('material.index')->with('success', 'Data material '.$data->name.' berhasil ditambahkan !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('material.index')->with('danger', 'Maaf terjadi kesalahan !');
         }
     }
 
@@ -67,9 +65,9 @@ class ColorsController extends Controller
      */
     public function show($id)
     {
-        return redirect()->route('warna.index');
+        return redirect()->route('material.index');
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -78,7 +76,7 @@ class ColorsController extends Controller
      */
     public function edit($id)
     {
-        return redirect()->route('warna.index');
+        return redirect()->route('material.index');
     }
 
     /**
@@ -91,24 +89,23 @@ class ColorsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name-'.$id => 'required|regex:/^[a-zA-Z ]*$/|max:12',
-        ], [
-            'name-'.$id.'.required' => 'Nama warna harus diisi !',
-            'name-'.$id.'.regex' => 'Nama warna harus berupa huruf !',
-            'name-'.$id.'.max' => 'Nama warna maximal 12 karakter !',
+            'name-'.$id => 'required|min:3|max:50'
+        ],[
+            'name-'.$id.'.required' => 'Nama material harus diisi !',
+            'name-'.$id.'.min:3' => 'Nama material minimal 3 karakter !',
+            'name-'.$id.'.max:50' => 'Nama material maximal 50 karakter !',
         ]);
-
+        
         try {
-            $data = Color::find($id);
+            $data = Material::findOrFail($id);
             $data->name = $request['name-'.$id];
             $data->save();
-
-            return redirect()->route('warna.index')->with('update', 'Data warna ' . $data->name . ' berhasil diubah !');
+            return redirect()->route('material.index')->with('update', 'Data material '.$data->name.' berhasil diubah !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('material.index')->with('danger', 'Maaf terjadi kesalahan !');
         }
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -118,16 +115,16 @@ class ColorsController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Color::findOrFail($id);
-            Product::where('color_id', $id)
+            $data = Material::findOrFail($id);
+            Product::where('material_id', $id)
             ->update([
-                'color_id' => null,
+                'material_id' => null,
             ]);
-            Color::destroy($id);
-            
-            return redirect()->route('warna.index')->with('danger', 'Data warna '.$data->name.' telah dihapus !');
+            Material::destroy($id);
+
+            return redirect()->route('material.index')->with('danger', 'Data material '.$data->name.' berhasil dihapus !');
         } catch (\Throwable $th) {
-            return redirect()->route('warna.index')->with('danger', 'Maaf, terjadi kesalahan !');
+            return redirect()->route('material.index')->with('danger', 'Maaf terjadi kesalahan   !');
         }
     }
 }

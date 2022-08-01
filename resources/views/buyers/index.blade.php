@@ -41,7 +41,7 @@
                         @endphp
                         @foreach ($data as $item)
                             <tr>
-                                <td>{{ $i++ }}</td>
+                                <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->product->name }}</td>
                                 <td> +62{{ $item->phone_num }}</td>
@@ -49,14 +49,14 @@
                                     <div class="d-flex justify-content-around">
                                         <a href="{{route('pembeli.show', [$item->id])}}" class="btn btn-blue btn-sm btn-icon"  data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"><i class="fas fa-eye"></i></a>
                                         <a href="{{route('pembeli.edit', [$item->id])}}" class="btn btn-cyan btn-sm btn-icon"><i class="fas fa-pen"></i></a>
-                                        <button class="btn btn-red btn-sm btn-icon" data-toggle="modal"
-                                        data-target="#delete-modal-{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                                        {{-- <button class="btn btn-red btn-sm btn-icon" data-toggle="modal"
+                                        data-target="#delete-modal-{{ $item->id }}"><i class="fas fa-trash"></i></button> --}}
                                         <button class="btn btn-secondary btn-sm btn-icon" data-toggle="modal"
                                         data-target="#qr-modal-{{ $item->id }}"><i class="fas fa-qrcode"></i></button>
                                     </div>
                                 </td>
                                 @include(' buyers.delete')
-                                @include(' buyers.qr')
+                                {{-- @include(' buyers.qr') --}}
                             </tr>
                         @endforeach
                     </tbody>

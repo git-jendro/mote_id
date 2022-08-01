@@ -12,28 +12,52 @@
                 <form action="{{ route('ukuran.update', [$item->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control h-100 @error('name-'.$item->id) is-invalid @enderror" type="text"
+                                name="name-{{$item->id}}" value="{{ $item->name }}" placeholder="Nama Ukuran">
+                        </div>
+                        @error('name-'.$item->id)
+                            <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <div class="input-group">
-                                <input class="form-control h-100 @error('name-' . $item->id) is-invalid @enderror"
-                                    type="text" name="name-{{ $item->id }}"
-                                    value="{{ $item->name }}" placeholder="Nama Ukuran">
+                            <div class="input-group input-group-joined">
+                                <input
+                                    class="form-control h-100 @error('width-'.$item->id) is-invalid @enderror @error('l_width-'.$item->id) is-invalid @enderror"
+                                    type="text" name="width-{{$item->id}}" value="{{ $item->width }}"
+                                    placeholder="Lebar Ukuran" maxlength="4">
+                                <span class="input-group-text text-muted">cm</span>
                             </div>
-                            @error('name-' . $item->id)
-                                <div class="mt-2 error invalid-feedback d-block w-100" id="edit-error-{{ $item->id }}">
+                            @error('width-'.$item->id)
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            @error('l_width-'.$item->id)
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <input class="form-control h-100 @error('initial-' . $item->id) is-invalid @enderror"
-                                    type="text" name="initial-{{ $item->id }}"
-                                    value="{{ $item->initial }}" placeholder="Inisial Ukuran">
+                            <div class="input-group input-group-joined">
+                                <input
+                                    class="form-control h-100 @error('height-'.$item->id) is-invalid @enderror @error('l_height-'.$item->id) is-invalid @enderror"
+                                    type="text" name="height-{{$item->id}}" value="{{ $item->height }}"
+                                    placeholder="Tinggi Ukuran" maxlength="4">
+                                <span class="input-group-text text-muted">cm</span>
                             </div>
-                            <sub>*Contoh : S, M, L, XL</sub>
-                            @error('initial-' . $item->id)
-                                <div class="mt-2 error invalid-feedback d-block w-100" id="edit-error-{{ $item->id }}">
+                            @error('height-'.$item->id)
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            @error('l_height-'.$item->id)
+                                <div class="mt-2 error invalid-feedback d-block w-100" id="create-error">
                                     {{ $message }}
                                 </div>
                             @enderror

@@ -15,8 +15,9 @@ class CreateBuyersTable extends Migration
     {
         Schema::create('buyers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('product_id');
+            $table->string('product_id');
             $table->string('name',150);
+            $table->string('ava')->nullable();
             $table->text('address');
             $table->string('phone_num', 15);
             $table->timestamps();

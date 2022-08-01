@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Buyer;
 use App\Color;
 use App\Product;
+use App\ProductImage;
 use App\Size;
 use Illuminate\Http\Request;
 
@@ -53,14 +54,46 @@ class PagesController extends Controller
         return view('index');
     }
 
-    public function show_product($param)
+    public function legal($param)
     {
+        // $con = Product::select('id')->groupBy('color_id')->distinct();
+        // $data = ProductImage::whereHas('product', function ($q) use ($con)
+        // {
+        //     $q->where('product_id', $con);
+        // })->get();
+        // dd($con);
         try {
             $data = Product::where('slug', $param)->firstOrFail();
-            
-            return view('show-product', compact('data'));
+
+
+            return view('legal', compact('data'));
         } catch (\Throwable $th) {
             return redirect()->route('index');
         }
+    }
+
+    public function show_product($slug, $kode)
+    {
+        
+    }
+
+    public function search_product(Request $request)
+    {
+        $data = Buyer::where([
+            'id' => $request->buyer_id,
+            'product_id' => $request->product_id,
+        ])->first();
+
+        return response()->json($data,200);
+    }
+
+    public function owner_check(Request $request)
+    {
+        $data = Buyer::where([
+            'id' => $request->id,
+        ])->firstOrFail();
+        // dd($data);
+
+        return view('show-product', compact('data'));
     }
 }

@@ -63,17 +63,25 @@ class BuyersController extends Controller
                 'product_id.exists' => 'Produk salah !',
             ]);
 
+            if (request()->has('file')) {
+                $request->validate([
+                    'ava' => 'image'
+                ],[
+                    'ava.image' => 'Format gambar salah !'
+                ]);
+            }
+
             $data = new Buyer;
             $data->id = $this->generateUUID();
             $data->name = $request->name;
             $data->phone_num = ltrim($request->phone_num, '0');
             $data->address = $request->address;
+            $path = 'Pembeli/'.$data->id;
+            if (request()->has('file')) {
+                $data->ava = $this->storage($path, $request->ava);
+            }
             $data->product_id = $request->product_id;
             $data->save();
-            $product = Product::find($request->product_id);
-            $total = $product->qty - 1;
-            $product->qty = $total;
-            $product->save();
 
             return redirect()->route('pembeli.index')->with('success', 'Data pembeli ' . $data->name . ' berhasil ditambahkan !');
         } catch (\Throwable $th) {

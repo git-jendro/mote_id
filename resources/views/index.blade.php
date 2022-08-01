@@ -38,15 +38,17 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-7 my-3 mx-auto">
-                        <div class="card-banner">
-                            <div class="card-body">
-                                <img src="{{asset('assets/img/items/catalogue.png')}}" alt="" class="card-img rounded-5">
-                                <div class="card-img-overlay d-flex flex-column rounded-5"
-                                    style="background-color: rgb(27, 24, 24, 0.5);">
-                                    <p class="mt-auto card-text text-center"><i>CATALOGUE</i></p>
+                        <a href="{{route('catalogue')}}">
+                            <div class="card-banner">
+                                <div class="card-body">
+                                    <img src="{{asset('assets/img/items/catalogue.png')}}" alt="" class="card-img rounded-5">
+                                    <div class="card-img-overlay d-flex flex-column rounded-5"
+                                        style="background-color: rgb(27, 24, 24, 0.5);">
+                                        <p class="mt-auto card-text text-center"><i>CATALOGUE</i></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -135,7 +137,7 @@
                     lastResult = decodedText;
                     // Handle on success condition with the decoded message.
                     console.log(`Scan result ${decodedText}`, decodedResult);
-                    window.open("https://stackoverflow.com", "_blank");
+                    window.open(decodedText, "_blank");
                 }
             }
 

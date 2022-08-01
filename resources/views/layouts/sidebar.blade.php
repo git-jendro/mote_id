@@ -35,6 +35,8 @@
                 {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                 <a class="collapse-item" id="list-color" href="{{route('warna.index')}}">List Warna</a>
                 <a class="collapse-item" id="list-size" href="{{route('ukuran.index')}}">List Ukuran</a>
+                <a class="collapse-item" id="list-material" href="{{route('material.index')}}">List Material</a>
+                <a class="collapse-item" id="list-screen-type" href="{{route('jenis-sablon.index')}}">List Jenis Sablon</a>
             </div>
         </div>
     </li>

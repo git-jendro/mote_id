@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/dashboard/produk/delete-image', 'ProductsController@delete_image');
 Route::get('/dashboard/area-chart', 'PagesController@area_chart');
 Route::get('/dashboard/pie-chart', 'PagesController@pie_chart');
+Route::post('/search/produk', 'PagesController@search_product');
